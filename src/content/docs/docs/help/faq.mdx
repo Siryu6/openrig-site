@@ -1,0 +1,56 @@
+---
+title: FAQ
+description: Common questions about OpenRig.
+---
+
+## Is it free?
+
+Yes. OpenRig is free software under the GNU General Public License, version 3 or later. The
+images, the app and the source are on [GitHub](https://github.com/Siryu6/OpenRig).
+
+## What latency should I expect?
+
+With the default buffer, 128 frames × 2 at 48 kHz, the buffer adds about 5 ms each way, plus the
+conversion time of your interface. Neural and impulse response blocks add no latency of their
+own.
+
+## How many blocks can it run?
+
+It depends on the blocks. A full A2 neural capture uses about 12 % of one Raspberry Pi 5 core at
+128 frames, and its Light quality about a quarter of that. The top bar shows the load as you
+build: see [Performance](../../setup/performance/).
+
+## Do I need a TONE3000 account?
+
+No. You can copy your own `.nam` captures and `.wav` impulse responses to the pedalboard. A free
+TONE3000 account lets you download captures on the pedalboard itself.
+
+## Can I use my Raspberry Pi 4?
+
+Not with the release images, which are built for the Pi 5 and the Pi 500. The app itself builds
+on any Linux; on older boards, expect fewer neural blocks.
+
+## Does it work with my audio interface?
+
+If it works on Linux without a driver (class compliant), most likely. It was tested with a
+Focusrite Scarlett 2i2. Sound HATs work on the Pi with their overlay.
+
+## Can I run it on my computer?
+
+Yes: the release has the app for Linux (x86_64 and aarch64), which needs JACK. It builds on macOS
+and Windows too, see [Build from source](../../dev/build/).
+
+## Will updates erase my presets?
+
+No. Updates from Settings keep everything on the data partition. Only writing a new image to the
+card erases it.
+
+## Is OpenRig affiliated with TONE3000?
+
+No. OpenRig is an independent project that uses the TONE3000 API. TONE3000 is a trademark of
+TONE3000.
+
+## How can I help?
+
+Try it and [report what does not work](https://github.com/Siryu6/OpenRig/issues), send a pull
+request, or test the x86_64 image on a real mini PC. See [Contributing](../../dev/contributing/).

@@ -1,0 +1,45 @@
+---
+title: Install on a Raspberry Pi 5
+description: Write the OpenRig image to a micro SD card and boot it.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Everything comes from the [releases page](https://github.com/Siryu6/OpenRig/releases).
+
+<Steps>
+
+1. Download `openrig-os-<version>-rpi5.img.xz` from the latest release.
+
+2. Write it to a micro SD card with [Raspberry Pi Imager](https://www.raspberrypi.com/software/):
+   **Choose OS** → **Use custom**, pick the file, and skip the OS customisation (the image
+   ignores it). [balenaEtcher](https://etcher.balena.io) works too, or on Linux:
+
+   ```bash
+   xz -dc openrig-os-<version>-rpi5.img.xz | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress
+   ```
+
+   Replace `/dev/sdX` with the card: everything on it is erased.
+
+3. Plug in the audio interface and the screen, insert the card and power on. The Pi boots
+   straight into OpenRig.
+
+   The first boot creates the data partition over the rest of the card, so it takes a little
+   longer.
+
+4. Plug your guitar into the first input of the interface and the first two outputs into your
+   amp, PA or headphones. Then go on with the [first start](../first-start/).
+
+</Steps>
+
+## Changing the interface or the buffer
+
+The first USB interface (or sound HAT) is used, at 48 kHz with 128 × 2 frames. To pick another
+interface or change the buffer, put the card in a computer and edit `pedalboard.txt` on its first
+partition. See [pedalboard.txt](../../setup/pedalboard-txt/).
+
+## Moving from an older card
+
+Writing a new image erases the card, presets and models included. To move to a newer version,
+use [Settings → Updates](../../setup/updates/) instead: it keeps your data. If you need to write
+the card again, back up `/data/pedalboard` first over [SSH](../../help/ssh/).

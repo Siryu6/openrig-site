@@ -1,0 +1,40 @@
+---
+title: Contributing
+description: Report issues, send pull requests, and how releases are made.
+---
+
+OpenRig is developed in the open on [GitHub](https://github.com/Siryu6/OpenRig). Every kind of
+help is welcome:
+
+- **Reports**: [open an issue](https://github.com/Siryu6/OpenRig/issues) with your board,
+  interface, version and what happened. Reports from real x86_64 mini PCs and from other audio
+  interfaces are especially useful.
+- **Pull requests**: fork, branch, and open a pull request against `main`.
+- **Documentation**: this site is in its own repository; every page has an edit link at the
+  bottom.
+
+## Checks
+
+Every pull request runs `cargo fmt --check`, `cargo clippy` and `cargo test`. Run them locally
+first. `tests/lv2_hosting_test.rs` compiles a small LV2 plugin with the system's C compiler and
+runs it through the host, so LV2 hosting is tested without any plugin installed.
+
+## Commits and releases
+
+Commit messages follow [conventional commits](https://www.conventionalcommits.org): `feat:`,
+`fix:`, `perf:`, `docs:`, `ci:`… Versions follow [semantic versioning](https://semver.org) and
+are computed from them.
+
+[release-plz](https://release-plz.dev) keeps a release pull request with the next version and its
+changelog. Merging it tags the release; a workflow then builds the app for Linux x86_64 and
+aarch64, the OS images and the signed updates, and attaches them to the release.
+
+## Real-time code
+
+Code that runs in the audio callback must not allocate, lock (other than `try_lock`), log or do
+I/O. When in doubt, do the work on the chain builder thread and send the result.
+
+## License
+
+OpenRig is GPL-3.0-or-later. By contributing, you agree to license your contribution under the
+same terms.

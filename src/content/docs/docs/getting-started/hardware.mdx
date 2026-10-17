@@ -1,0 +1,59 @@
+---
+title: What you need
+description: The hardware OpenRig runs on, and what to look for.
+---
+
+OpenRig needs no custom board: every part is a standard one.
+
+| Part | What to get |
+|---|---|
+| Computer | A **Raspberry Pi 5** (or a Pi 500), or an **x86_64 mini PC** with UEFI and Intel graphics (Intel N100, Lenovo Tiny…) |
+| Audio interface | A USB audio interface that works without a driver (class compliant), or a sound HAT on the Pi |
+| Screen | A touchscreen. The UI is made for 1024 × 600 and up; a mouse works too |
+| Storage | A micro SD card for the Pi, a USB stick or an SSD for a mini PC; 8 GB or more |
+| Power | For a Pi 5, the official 27 W (5 V, 5 A) supply |
+| Optional | Up to 8 footswitches and a rotary encoder on the GPIO, MIDI controllers over USB or DIN |
+
+## Raspberry Pi 5
+
+The Pi 5 is the main target. The release images use its `PREEMPT_RT` kernel, and the neural
+engine is tuned for its ARM cores: a full A2 amp capture uses about 12 % of one core at 128
+frames.
+
+### Power
+
+The Pi 5 gives USB devices 1.6 A only with the official **27 W** supply; with any other supply
+it limits them to 600 mA. A touchscreen and an audio interface both powered from the Pi need the
+27 W supply, or they drop out.
+
+## Audio interface
+
+Any interface that Linux sees without a driver works; the first one found is used. It was
+tested with a Focusrite Scarlett 2i2 at 48 kHz and 128 × 2 frames, about 5 ms of buffer each
+way. Sound HATs work too: add their overlay in `extra.txt` (see
+[pedalboard.txt](../../setup/pedalboard-txt/)).
+
+The guitar goes into the first input. The first two outputs are left and right.
+
+## Screen
+
+Any HDMI screen works; a touchscreen makes it a pedalboard. Small 10" panels at 1024 × 600
+are a good fit. Some of them send wrong display data to the Pi: see
+[Troubleshooting](../../help/troubleshooting/) if the picture does not show.
+
+## x86_64 mini PC
+
+Any UEFI PC with **Intel graphics**: the image has no AMD GPU driver yet. It erases the whole
+disk it is written to. Secure Boot must be off.
+
+:::caution
+The x86_64 image is tested in QEMU only so far. Reports from real mini PCs are welcome.
+:::
+
+## Footswitches and encoder
+
+Optional. Momentary footswitches wire between a GPIO pin and ground, with no resistor: the Pi's
+internal pull-ups are used. A rotary encoder (A, B and its push button) drives the UI like the
+arrow keys. See [Footswitches and encoder](../../setup/footswitches/).
+
+Any MIDI controller works too, with nothing to wire: see [MIDI](../../using/midi/).

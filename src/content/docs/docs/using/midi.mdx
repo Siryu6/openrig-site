@@ -1,0 +1,76 @@
+---
+title: MIDI
+description: Control presets, scenes and switches from a MIDI controller, learn any knob.
+---
+
+OpenRig listens to every MIDI input it finds: USB controllers, the DIN input of an audio
+interface, a computer. Devices can be plugged in or out while it runs; there is nothing to
+select. **Settings** → **MIDI** shows the devices, an activity LED, the channel and the clock
+option.
+
+It follows the map most floor units share, so a MIDI controller set up for a Line 6 Helix (or a
+HeadRush, a Quad Cortex, a Boss) works as is.
+
+## The map
+
+| Message | Action |
+|---|---|
+| PC *n* | Preset *n*+1 (presets sorted by name); with a setlist loaded, slot *n*+1 of the setlist |
+| CC0 *n* | Bank: the next PC loads preset *n* × 128 + PC |
+| CC32 0 | Leave the setlist |
+| CC32 *n* | Load setlist *n* (setlists sorted by name) |
+| CC49 – CC56 | Footswitches 1 to 8, in the current Live mode |
+| CC60 | Looper: 0–63 overdub, 64–127 record |
+| CC61 | Looper: 0–63 stop, 64–127 play |
+| CC63 | Looper: undo |
+| CC64 | Tap tempo |
+| CC68 | Tuner on / off |
+| CC69 | Scene: 0–7 scenes 1 to 8, 8 next, 9 previous |
+| CC71 | Live mode: 0 Stomp, 2 Setlist, 3 Scenes, 4 next, 5 previous |
+| CC72 | Preset: 0–63 previous, 64–127 next |
+
+Loading the preset already playing does nothing, so a controller that sends its PC again does
+not cut the tails.
+
+## Learning a controller
+
+Any control of any block can follow a MIDI controller, such as an expression pedal on a wah or a
+volume.
+
+1. Open the block's [editor](../editor/) and tap **MIDI**.
+2. Touch a control, then move the pedal or knob of your controller (or the other way round).
+3. The control shows a small **CC *n*** tag. Touch another control, or **Done**.
+
+One controller can drive several controls, for instance an expression pedal opening a wah and
+closing a volume. **Clear** forgets the controller of the touched control. Assignments are saved
+with the preset.
+
+By convention, use CC1 to CC3 for expression pedals and CC11 for a volume pedal. CC0, CC32,
+CC49–72 and CC120–127 are taken by the map above and cannot be learned.
+
+### Heel and toe
+
+After learning, the banner shows **HEEL** and **TOE**: where the control is when the pedal is
+at 0 and at 127, in percent of its range. A toe below the heel reverses the pedal (**Swap**),
+for a volume that closes as the pedal opens. Moving the pedal while the banner shows lets you
+try the range.
+
+## Clock
+
+With **Follow MIDI clock** on (the default), an incoming MIDI clock sets the tempo. The Live
+page shows **MIDI CLOCK** while it runs. When it stops, the tempo is yours again.
+
+## Channel
+
+**Omni** (the default) listens to every channel; otherwise only the one chosen. The clock is
+always heard.
+
+## MIDI to plugins
+
+LV2 plugins with a MIDI input, such as synths, get the notes, pitch bend, pressure and the CCs
+that are not in the map. Program changes stay with the presets.
+
+## Not yet
+
+MIDI output (sending program changes to other gear, MIDI thru), the looper's half speed and
+reverse (CC62), and the Helix snapshot modes (CC65–67) are not supported yet.

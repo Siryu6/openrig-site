@@ -1,0 +1,16 @@
+---
+// A screen recording with its caption, in the docs
+import Video from './Video.astro';
+
+interface Props {
+	name: string;
+	label: string;
+	caption?: string;
+}
+const { name, label, caption } = Astro.props;
+---
+
+<figure>
+	<Video name={name} label={label} autoplay={false} />
+	{caption && <figcaption>{caption}</figcaption>}
+</figure>

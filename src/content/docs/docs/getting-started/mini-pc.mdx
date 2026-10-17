@@ -1,0 +1,44 @@
+---
+title: Install on a mini PC
+description: Run OpenRig on an x86_64 mini PC with UEFI and Intel graphics.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+OpenRig also runs on x86_64 PCs that boot in UEFI mode and have Intel graphics: an Intel N100
+mini PC, a Lenovo ThinkCentre Tiny and the like.
+
+:::caution
+The x86_64 image is tested in QEMU only so far. AMD graphics are not supported yet.
+:::
+
+<Steps>
+
+1. Download `openrig-os-<version>-x86_64.img.xz` from the
+   [releases page](https://github.com/Siryu6/OpenRig/releases).
+
+2. Write it to a USB stick or an SSD, the same way as for the
+   [Raspberry Pi](../raspberry-pi/). The whole disk is used: it erases it.
+
+3. In the PC's firmware setup, **disable Secure Boot** and choose that disk to boot from.
+
+4. Plug in the audio interface and the screen, and boot. Then go on with the
+   [first start](../first-start/).
+
+</Steps>
+
+The settings file `pedalboard.txt` is on the first (EFI) partition of the disk. The kernel
+arguments are in `EFI/BOOT/grub.cfg` there.
+
+## Trying it without installing
+
+The release also has the app alone for desktop Linux, `openrig-<version>-linux-x86_64.tar.gz`
+(and `aarch64`). It needs JACK and lilv from the system:
+
+```bash
+sudo apt install jackd2 liblilv-0-0
+jackd -d alsa -r 48000 -p 128 -n 2 &
+./pedalboard
+```
+
+It opens in a window; nothing on the computer is changed.

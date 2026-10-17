@@ -1,0 +1,89 @@
+---
+title: Build from source
+description: Build the app on Linux, or the OS image for the Pi 5 and x86_64.
+---
+
+OpenRig is written in Rust, with a [Slint](https://slint.dev) UI, [JACK](https://jackaudio.org) for
+audio, [lilv](https://drobilla.net/software/lilv) for LV2 and
+[NeuralAudio](https://github.com/mikeoliphant/NeuralAudio) for neural captures. The source is on
+[GitHub](https://github.com/Siryu6/OpenRig).
+
+## The app
+
+Dependencies on Debian or Raspberry Pi OS:
+
+```bash
+sudo apt install -y build-essential cmake pkg-config libjack-jackd2-dev liblilv-dev lv2-dev \
+    libasound2-dev libfontconfig1-dev libxkbcommon-dev
+# for --features kms (full screen without X11 / Wayland):
+sudo apt install -y libinput-dev libgbm-dev libegl-dev libudev-dev
+```
+
+NeuralAudio is a git submodule, with its own submodules:
+
+```bash
+git clone https://github.com/Siryu6/OpenRig
+cd OpenRig
+git submodule update --init --recursive
+cargo build --release
+```
+
+Then start JACK and run it:
+
+```bash
+jackd -d alsa -r 48000 -p 128 -n 2 &   # or PipeWire's JACK
+cargo run --release
+```
+
+Without JACK, the UI starts with audio disabled.
+
+### Features
+
+| Build | Command |
+|---|---|
+| Default: LV2, NAM, TONE3000, MIDI, desktop window | `cargo build --release` |
+| With footswitches and encoder on a Pi | `cargo build --release --features gpio` |
+| Without NAM or TONE3000 (no CMake or C++) | `cargo build --no-default-features --features winit,lv2,midi` |
+| Full screen without X11 / Wayland | `cargo build --release --features kms` |
+| As in the Pi image | `cargo build --release --no-default-features --features kms,lv2,nam,tone3000,midi,gpio,splash,update` |
+| Tests | `cargo test` |
+
+The NAM code is always compiled optimized, even in debug builds: otherwise the models cannot keep
+up in real time.
+
+### Environment
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `PEDALBOARD_DATA_DIR` | `~/.local/share/pedalboard` on Linux | Presets, setlists, session, models |
+| `LV2_PATH` | system | Where LV2 bundles are searched |
+| `PEDALBOARD_NO_AUTOCONNECT` | unset | Do not connect the JACK ports |
+| `PEDALBOARD_TONE3000_CLIENT_ID` | unset | Prefills the TONE3000 publishable key |
+| `RUST_LOG` | `info` | Log level |
+
+## The OS image
+
+The image is built with [Buildroot](https://buildroot.org) from `os/`, on Linux, with Buildroot's
+[host requirements](https://buildroot.org/downloads/manual/manual.html#requirement-mandatory):
+
+```bash
+git submodule update --init --recursive
+make -C os rpi5        # or: make -C os x86_64
+```
+
+The first build downloads a pinned Buildroot and every source, takes about 20 GB of disk and one
+to two hours; later builds reuse what is built. Besides the image, a build writes the signed
+update bundles next to it.
+
+The first build creates the update signing key in `os/keys`. Keep it, outside of git: images
+built with another key refuse its updates.
+
+### Testing in QEMU
+
+```bash
+make -C os qemu-x86_64 QEMU_KEYS=~/.ssh/id_ed25519.pub
+ssh -p 2222 root@127.0.0.1
+```
+
+The screen is on VNC at `127.0.0.1:5900`. The screenshots and videos of this documentation were
+made this way.

@@ -1,0 +1,56 @@
+---
+title: LV2 plugins
+description: Add LV2 effects to the pedalboard.
+---
+
+[LV2](https://lv2plug.in) is the open plugin standard of Linux audio. OpenRig hosts LV2 plugins
+next to its built-in blocks: their controls, ranges, units and switches come from the plugin, and
+are edited like any other block.
+
+The OS image ships **no LV2 plugin**: the Amp, Amp + Cab, Pedal, Cabinet and Space blocks work
+out of the box.
+
+## Adding plugins
+
+Copy LV2 bundles (folders ending in `.lv2`) into `/data/pedalboard/lv2` over [SSH](../../help/ssh/),
+make them belong to the app, and restart:
+
+```bash
+scp -O -r my-plugin.lv2 root@192.168.1.42:/data/pedalboard/lv2/
+ssh root@192.168.1.42 'chown -R pedalboard:pedalboard /data/pedalboard/lv2'
+```
+
+The bundles must be built:
+
+- for the board: **aarch64** on the Raspberry Pi, **x86_64** on a mini PC;
+- against a C library no newer than the image's;
+- with the libraries they need present on the image.
+
+The surest way is to build them with the image: add their Buildroot package to the board's
+defconfig (see [Build from source](../../dev/build/)).
+
+## What is supported
+
+- Control ports: numbers, toggles, integers and lists, with their ranges and units.
+- Tempo: ports marked as BPM get the preset's tempo, and plugins following the host transport
+  get it as a `time:Position` event.
+- MIDI: plugins with a MIDI input get the notes and free CCs (see [MIDI](../../using/midi/#midi-to-plugins)).
+- Host features: URID map and unmap, options, bounded block length, `isLive`.
+
+Plugins that require another host feature are skipped when the pedalboard starts, rather than
+loaded half-working. Not provided yet: the worker extension and plugin state, which rules out
+plugins that load files themselves (LV2 NAM, AIDA-X or IR loaders: use the built-in
+[Amp, Pedal and Cabinet blocks](../../using/neural-blocks/) instead) and some plugins that keep
+an internal state, such as the Dragonfly Hall, Room and Plate reverbs.
+
+## Plugins worth trying
+
+Collections whose plugins load with the features above: [ZAM](https://www.zamaudio.com),
+the [DPF plugins](https://github.com/DISTRHO/DPF-Plugins), the Guitarix
+[GxPlugins](https://github.com/brummer10/GxPlugins.lv2), [CAPS](http://quitte.de/dsp/caps.html),
+[x42](https://x42-plugins.com) (fil4, dpl, tuna, fat1), [Calf](https://calf-studio-gear.org) built
+without its UI, [LSP](https://lsp-plug.in), Airwindows, TAP and MDA. The Dragonfly Early Reflections
+plugin loads; its other reverbs do not yet.
+
+On desktop Linux, the app finds the plugins installed on the system, for instance
+`sudo apt install x42-plugins zam-plugins`.

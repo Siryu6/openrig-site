@@ -1,0 +1,77 @@
+/* Starlight theme: the colours of the OpenRig UI (amber on near black) */
+:root {
+	--sl-font: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+	--sl-font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+	--sl-content-width: 46rem;
+}
+
+:root,
+::backdrop {
+	--sl-color-accent-low: #3a2608;
+	--sl-color-accent: #f0a43c;
+	--sl-color-accent-high: #ffd59a;
+	--sl-color-white: #f4f4f5;
+	--sl-color-gray-1: #e4e4e7;
+	--sl-color-gray-2: #c4c4c8;
+	--sl-color-gray-3: #8e8e96;
+	--sl-color-gray-4: #55555c;
+	--sl-color-gray-5: #2a2a2f;
+	--sl-color-gray-6: #141417;
+	--sl-color-black: #070708;
+}
+
+:root[data-theme='light'],
+[data-theme='light'] ::backdrop {
+	--sl-color-accent-low: #fbe6c6;
+	--sl-color-accent: #9a5b00;
+	--sl-color-accent-high: #4a2c00;
+	--sl-color-white: #121214;
+	--sl-color-gray-1: #26262a;
+	--sl-color-gray-2: #3a3a40;
+	--sl-color-gray-3: #5c5c64;
+	--sl-color-gray-4: #8e8e96;
+	--sl-color-gray-5: #c9c9cf;
+	--sl-color-gray-6: #ececef;
+	--sl-color-gray-7: #f6f6f7;
+	--sl-color-black: #ffffff;
+}
+
+.site-title {
+	font-weight: 600;
+	letter-spacing: 0.01em;
+}
+
+/* Screenshots: a thin bezel, like the screen they come from */
+.sl-markdown-content img {
+	border-radius: 10px;
+	border: 1px solid var(--sl-color-gray-5);
+	box-shadow: 0 12px 40px -18px rgb(0 0 0 / 0.6);
+}
+
+.sl-markdown-content figure {
+	margin-block: 1.75rem;
+}
+
+.sl-markdown-content figcaption {
+	margin-top: 0.6rem;
+	font-size: var(--sl-text-sm);
+	color: var(--sl-color-gray-3);
+	text-align: center;
+}
+
+.sl-markdown-content video {
+	width: 100%;
+	border-radius: 10px;
+	border: 1px solid var(--sl-color-gray-5);
+	background: #050506;
+}
+
+.sl-markdown-content kbd {
+	font-family: var(--sl-font-mono);
+	font-size: 0.85em;
+	padding: 0.1em 0.4em;
+	border: 1px solid var(--sl-color-gray-5);
+	border-bottom-width: 2px;
+	border-radius: 4px;
+	background: var(--sl-color-gray-6);
+}

@@ -1,0 +1,53 @@
+---
+title: Footswitches and encoder
+description: Wire footswitches and a rotary encoder to the Raspberry Pi's GPIO.
+---
+
+On a Raspberry Pi, up to 8 footswitches and a rotary encoder can be wired straight to the GPIO
+header. No extra board, no resistor: each input is wired between its GPIO and ground, and the
+Pi's internal pull-ups do the rest.
+
+:::tip
+Any MIDI foot controller works too, with nothing to wire: see [MIDI](../../using/midi/).
+:::
+
+## Parts
+
+- Momentary footswitches (SPST, normally open), the kind used for tap tempo.
+- Optionally, a rotary encoder with a push button (the common EC11 type).
+- Wires to the Pi's 40-pin header, ideally through a connector so the box can be opened.
+
+## Default wiring
+
+| Input | GPIO (BCM) | Header pin |
+|---|---|---|
+| Footswitch 1 | 17 | 11 |
+| Footswitch 2 | 27 | 13 |
+| Footswitch 3 | 22 | 15 |
+| Footswitch 4 | 23 | 16 |
+| Encoder A | 5 | 29 |
+| Encoder B | 6 | 31 |
+| Encoder button | 13 | 33 |
+| Ground | | 6, 9, 14, 20, 25, 30, 34, 39 |
+
+Wire the other leg of each switch, and the encoder's common pin, to a ground pin.
+
+## Settings → Hardware
+
+**Settings** → **Hardware** sets what is wired:
+
+- **Footswitches**: from none to 8, and the GPIO of each. A LED next to each one lights while it is
+  pressed, to check the wiring.
+- **Tap tempo on the last footswitch**: on by default with two switches or more. The last switch
+  then taps the tempo, and held, opens the tuner.
+- **Encoder**: its A and B GPIOs, its push button or none, and its steps per detent. Lower the
+  steps if it takes several clicks to move.
+
+Changes apply at once and are kept on the data partition.
+
+## What they do
+
+The footswitches follow the mode of the [Live page](../../using/live/): blocks on and off in
+Stomp mode, scenes in Scenes mode, presets in Setlist mode. They act when pressed.
+
+The encoder moves through the controls like the arrow keys; its button selects, like Return.

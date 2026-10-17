@@ -1,0 +1,62 @@
+---
+title: Troubleshooting
+description: No picture, no sound, clicks, devices dropping out.
+---
+
+## Black screen, nothing on SSH
+
+Put the card in a computer and edit `cmdline.txt`: on the Pi, on the `SYSTEM` partition in use
+(partition 2 on a new card); on a mini PC, `EFI/BOOT/grub.cfg`. Remove `quiet loglevel=3` and add
+`console=tty1` to see the boot messages on the screen. Keep it all on one line.
+
+## Wrong resolution, or no picture on a small screen
+
+Some small panels send no or wrong display data (EDID), or are not ready when the Pi starts.
+Add the mode at the end of `cmdline.txt`, for instance for a 10" 1024 × 600 screen:
+
+```
+video=HDMI-A-1:1024x600@60D
+```
+
+`D` forces the output on. Before Linux takes over the display, the screen may show its own "No
+signal" message for a moment: that is normal.
+
+## Screen upside down or sideways
+
+Set `display_rotation` to 90, 180 or 270 in [pedalboard.txt](../../setup/pedalboard-txt/).
+
+## No sound
+
+1. Check that the **IN** meter moves when you play. If it does not, the guitar is not reaching
+   the pedalboard: check the cable and the interface's input gain.
+2. Over [SSH](../ssh/), `cat /proc/asound/cards` lists the interfaces the system sees. Set
+   `audio_device` in `pedalboard.txt` to the name in brackets of yours.
+3. `tail -f /var/log/messages` shows why the audio server does not start.
+
+Without an interface, the audio server waits for one: plugging it in later works.
+
+## USB devices dropping out
+
+A touchscreen or an audio interface that disconnects is usually short of power. The Pi 5 gives
+USB devices 1.6 A only with the official **27 W** (5 V, 5 A) supply, and 600 mA otherwise.
+Use that supply, or a powered USB hub.
+
+## Clicks and crackles
+
+See [Performance](../../setup/performance/#if-you-hear-clicks).
+
+## The tone sounds wrong with a capture
+
+Neural captures are trained at 48 kHz. Check that `sample_rate=48000` in `pedalboard.txt`.
+Try **Normalize** on the block, and set **Input** so the capture is driven as intended.
+
+## A plugin does not show in Add effect
+
+The plugin may need a host feature OpenRig does not provide yet, or be built for another
+processor. The log says why it was skipped: `grep -i lv2 /var/log/messages`. See
+[LV2 plugins](../../setup/lv2/).
+
+## Still stuck
+
+[Open an issue](https://github.com/Siryu6/OpenRig/issues) with the version (Settings → Updates),
+your board and interface, and the relevant lines of `/var/log/messages`.

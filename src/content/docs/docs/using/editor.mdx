@@ -1,0 +1,42 @@
+---
+title: Block editor
+description: Every control of a block, its model, its colour and its MIDI controllers.
+---
+
+import Shot from '../../../../components/Shot.astro';
+import editorAmp from '../../../../assets/shots/editor-amp.png';
+import presets from '../../../../assets/shots/editor-tone-presets.png';
+import color from '../../../../assets/shots/editor-color.png';
+
+Double tap a block, or tap the pencil under its quick knobs, to open its editor.
+
+<Shot src={editorAmp} alt="The editor of an Amp block playing a Peavey 5150 capture: Input, Output, Normalize, Gate, Threshold, Bass, Middle, Treble and Quality" caption="An Amp block playing the Peavey 5150 Blockletter capture by @doubleyoud on TONE3000." />
+
+## Header
+
+- The block's name, its category, its number of parameters, and the share of a CPU core it
+  uses while it plays.
+- **Color**: choose the colour of the block in the rack and on the Live page. **Auto** follows
+  its family.
+- **MIDI**: learn MIDI controllers for its controls (see [MIDI](../midi/#learning-a-controller)).
+- **On**: bypass the block, or turn it back on.
+
+## Model
+
+Neural and impulse response blocks have a second line with the loaded model:
+
+- the tone's picture, its gear, its creator and its name;
+- a drop-down with the **presets** of the tone (the other captures in the same folder);
+- **Browse**, to open the [TONE3000 library](../tone3000/) for this block;
+- **Choose**, to pick a tone already on the pedalboard.
+
+<Shot src={presets} alt="The list of presets of the Peavey 5150 Blockletter tone" caption="A tone holds several captures of the same gear; the drop-down switches between them." />
+
+## Controls
+
+Knobs turn with a vertical drag. Switches toggle with a tap. Lists open as a chooser. LV2
+plugins show the controls their author declared, with their ranges and units.
+
+## Colour
+
+<Shot src={color} alt="The Block color chooser with Auto and nine colours" caption="Ten choices, Auto included. The colour is saved in the preset." />
