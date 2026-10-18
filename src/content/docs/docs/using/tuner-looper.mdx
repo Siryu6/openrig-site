@@ -14,7 +14,8 @@ import looper from '../../../../assets/shots/looper.png';
 The tuner is chromatic and goes down to 38 Hz: drop tunings, 7 and 8 strings and bass guitars
 work. It only listens while its page is open, so it costs nothing the rest of the time.
 
-- **Mute while tuning** silences the output while the page is open.
+- **Mute while tuning** silences the outputs while the page is open, including the inputs played
+  straight on an output (see [Inputs and outputs](../../setup/routing/)).
 - **Reference** sets the pitch of A4, 440 Hz by default.
 
 Open it from the **Tuner** tab, by holding the tap footswitch, or with MIDI CC68.
@@ -23,7 +24,8 @@ Open it from the **Tuner** tab, by holding the tap footswitch, or with MIDI CC68
 
 <Shot src={looper} alt="The looper playing, 4.5 seconds into a 7 second loop, one layer" caption="The looper, playing a 7 second loop." />
 
-The looper records what comes out of the effects, in stereo, up to 30 seconds.
+The looper records what comes out of the effects, in stereo, up to 30 seconds. It plays on the
+main mix only, not on the [sends](../../setup/routing/#sends-and-returns).
 
 | Button | What it does |
 |---|---|

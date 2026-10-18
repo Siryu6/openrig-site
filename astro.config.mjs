@@ -57,6 +57,7 @@ export default defineConfig({
 					label: 'Setting up',
 					items: [
 						{ label: 'Settings', slug: 'docs/setup/settings' },
+						{ label: 'Inputs and outputs', slug: 'docs/setup/routing' },
 						{ label: 'Updates', slug: 'docs/setup/updates' },
 						{ label: 'Footswitches and encoder', slug: 'docs/setup/footswitches' },
 						{ label: 'LV2 plugins', slug: 'docs/setup/lv2' },

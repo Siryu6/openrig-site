@@ -1,0 +1,112 @@
+---
+title: Inputs and outputs
+description: Use every input and output of the interface, with sends and returns on the blocks.
+---
+
+import Shot from '../../../../components/Shot.astro';
+import outputs from '../../../../assets/shots/routing-outputs.png';
+import blocks from '../../../../assets/shots/routing-blocks.png';
+import rack from '../../../../assets/shots/rack-io.png';
+
+With a 2-in, 2-out interface there is nothing to set: the guitar goes into input 1 and outputs 1
+and 2 play the effects in stereo. An interface with more inputs and outputs gets them all, and
+the **Routing** page says what each one does:
+
+- play a dry guitar, or the signal before the amp, on its own output, to reamp later or for the
+  front of house;
+- feed a second instrument (a bass DI, a synth) into the chain;
+- send a different mix to the in-ear monitors.
+
+Open it from **⋮** → **Settings** → **Inputs and outputs** → **Routing**. Changes are heard at once
+and kept; there is nothing to save. On a 480-pixel-high screen, scroll down to see the sends and
+returns.
+
+## Inputs
+
+<Shot src={outputs} alt="The Routing page with 4 inputs and 4 outputs: outputs 1-2 play the main mix, output 3 plays Send 1 at -3 dB, output 4 plays Input 2" caption="A 4-in, 4-out interface: the main mix on 1 and 2, the signal before the amp on 3, the bass DI as it comes in on 4." />
+
+**Effects input** chooses the input that goes through the effects and the tuner, input 1 by
+default. Each input has its own meter. The other inputs are not processed, but they can be played
+on an output or used as a [return](#sends-and-returns).
+
+## Outputs
+
+Each output, or pair of outputs, has a card:
+
+| Control | What it does |
+|---|---|
+| **Source** | **Off**, the **Main mix** of the effects, **Send 1** to **Send 4**, or an **Input** played as it comes in, without effects |
+| **Stereo / mono** (the button next to the name) | Joins an output and the next one into a stereo pair, or splits a pair into two outputs |
+| **Level** | −60 to +12 dB |
+| **Balance** | Left / right balance of a stereo pair |
+| **L+R / L / R** | On a single output playing a stereo source: both sides summed, or one side only |
+| **M** | Mute |
+| **S** | Solo: while an output is soloed, only soloed outputs play |
+| **Ø** | Flips the polarity, for a mic'd cabinet out of phase with the direct signal |
+
+Level, mute and source changes are ramped over 10 ms, so they never click. When the tuner's
+**Mute while tuning** is on, the effects and the inputs played straight through are muted while
+it is open.
+
+The outputs belong to the rig, not to a preset: changing presets never changes the levels sent
+to the front of house. They are kept in `routing.json` on the data partition.
+
+## Sends and returns
+
+<Shot src={blocks} alt="The Sends and returns card of the Guitar and bass preset: Pedal sends to Send 1, the Cabinet of branch B of the A/B split returns Input 2" caption="Sends and returns of a preset: a send after the pedal, and the bass on input 2 straight into the cabinet of branch B." />
+
+The last card lists every block of the current preset, in signal order, with the split branch it
+is in. Each block can have:
+
+- a **return before** it: an input of the interface replaces the signal at that point. The
+  blocks before it are no longer heard on that path; the block and the ones after it process the
+  input instead;
+- a **send after** it: the signal at that point is copied to a send, while it carries on through
+  the chain. An output whose source is that send plays it.
+
+Sends and returns are saved with the preset, so each song can have its own. In the rack, a block
+with a send or a return only shows a small mark under it: **S1** for a send, **IN 2** for a
+return.
+
+<Shot src={rack} alt="The rack of the Guitar and bass preset: Pedal marked S1, an A/B split with Amp and Cabinet on A and a Cabinet marked IN 2 on B, then Space" caption="The same preset in the rack: the marks under Pedal and the lower Cabinet." />
+
+A send placed in a branch of an A/B split is only heard while that branch is selected. During a
+preset change, the sends crossfade with the rest of the sound.
+
+## Examples
+
+### Dry signal for reamping
+
+1. On the last block before the amp, set **Send after** to **Send 1**.
+2. Set an output to **Send 1**.
+
+That output now plays the guitar with its pedals but without the amp, ready to be recorded and
+reamped. Put the send before the first block for a fully dry signal, or set the output to the
+guitar's input instead.
+
+### Guitar and bass on one pedalboard
+
+1. Plug the bass into input 2.
+2. Add an [A/B split](../../using/rack/#splits): the amp and its cabinet on branch A, a bass
+   cabinet on branch B.
+3. Set the **Return before** of the bass cabinet to **Input 2**.
+
+Switching the split to B, from a scene, a footswitch or MIDI, plays the bass through its cabinet
+and the blocks after the split. The branch that is not selected is not processed and costs
+nothing.
+
+### A reverb on its own output
+
+Put the reverb alone in one branch of a [Parallel mix](../../using/rack/#splits) split, turn its
+own mix to 100 % wet, and set its **Send after** to **Send 2**. The main mix still plays the
+guitar with the reverb, and an output set to **Send 2** plays the reverb alone: for a
+wet / dry / wet rig, or a separate reverb channel at the desk.
+
+## Limits
+
+- At most 16 inputs, 16 outputs and 4 sends.
+- Sends and returns belong to the preset, not to a scene: to change them per scene, put the
+  blocks in an A/B split.
+- The [looper](../../using/tuner-looper/#looper) only records and plays the main mix.
+- A preset made on a larger interface keeps its returns on inputs that are missing; those
+  returns play silence until that interface is back.
