@@ -30,8 +30,8 @@ const docs = (path = '') => `${base}/docs/${path}`;
 					that boots straight to the rack.
 				</p>
 				<div class="ctas">
-					<a class="btn btn-primary" href={docs()}>Get started</a>
-					<a class="btn btn-ghost" href="https://github.com/Siryu6/OpenRig/releases">Download 0.2</a>
+					<a class="btn btn-primary" href={docs()} data-umami-event="get-started" data-umami-event-location="hero">Get started</a>
+					<a class="btn btn-ghost" href="https://github.com/Siryu6/OpenRig/releases" data-umami-event="download" data-umami-event-location="hero" data-umami-event-version="0.2">Download 0.2</a>
 				</div>
 				<p class="hero-meta">Free software under the GPL-3.0 · No account needed</p>
 			</div>
@@ -79,7 +79,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 						<li>A/B, Mix and left/right splits, nested as deep as you need</li>
 						<li>Mono or stereo; input and output meters with clip LEDs</li>
 					</ul>
-					<a class="more" href={docs('using/rack/')}>The rack in the docs →</a>
+					<a class="more" href={docs('using/rack/')} data-umami-event="docs-link" data-umami-event-location="feature" data-umami-event-target="using/rack">The rack in the docs →</a>
 				</div>
 				<div class="screen small">
 					<Image src={strip} alt="The rack with an amp block selected and its knobs along the bottom" widths={[720, 1280]} sizes="(max-width: 900px) 100vw, 680px" />
@@ -99,7 +99,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 						<li>Light quality for A2 captures, about a quarter of the CPU</li>
 						<li>Zero-latency impulse responses with level, mix and low / high cut</li>
 					</ul>
-					<a class="more" href={docs('using/neural-blocks/')}>Amps, pedals and cabinets →</a>
+					<a class="more" href={docs('using/neural-blocks/')} data-umami-event="docs-link" data-umami-event-location="feature" data-umami-event-target="using/neural-blocks">Amps, pedals and cabinets →</a>
 				</div>
 				<div class="screen small">
 					<Image src={editorAmp} alt="The block editor of an Amp block with its knobs and the tone preset list" widths={[720, 1280]} sizes="(max-width: 900px) 100vw, 680px" />
@@ -121,7 +121,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 					</ul>
 					<span class="powered">Powered by <b>TONE3000</b></span>
 					<br />
-					<a class="more" href={docs('using/tone3000/')}>TONE3000 in the docs →</a>
+					<a class="more" href={docs('using/tone3000/')} data-umami-event="docs-link" data-umami-event-location="feature" data-umami-event-target="using/tone3000">TONE3000 in the docs →</a>
 				</div>
 				<div>
 					<div class="screen small">
@@ -149,7 +149,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 						<li>Delay and reverb tails ring on across bypass and scene changes</li>
 						<li>Tap tempo sent to plugins; hold the last switch for the tuner</li>
 					</ul>
-					<a class="more" href={docs('using/live/')}>The Live page →</a>
+					<a class="more" href={docs('using/live/')} data-umami-event="docs-link" data-umami-event-location="feature" data-umami-event-target="using/live">The Live page →</a>
 				</div>
 				<div class="screen small">
 					<Video name="live" label="Toggling stomp switches, changing scenes and tapping the tempo on the Live page" />
@@ -318,7 +318,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 							<tr><th>Optional</th><td>Up to 8 footswitches and a rotary encoder on GPIO, MIDI controllers over USB</td></tr>
 						</tbody>
 					</table>
-					<a class="more" href={docs('getting-started/hardware/')}>Full hardware guide →</a>
+					<a class="more" href={docs('getting-started/hardware/')} data-umami-event="docs-link" data-umami-event-location="feature" data-umami-event-target="getting-started/hardware">Full hardware guide →</a>
 				</div>
 				<div class="bom-diagram" aria-label="Wiring: the guitar goes into the USB audio interface, whose outputs go to an amp or PA; the interface, footswitches and a MIDI pedal connect to the Raspberry Pi, which drives the touchscreen">
 					<svg viewBox="0 0 520 380" role="img" font-family="Inter Variable, system-ui, sans-serif">
@@ -385,7 +385,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 						A/B updates and rollback included; the x86_64 image is tested in QEMU so far. Expect rough edges, and tell us about
 						them: issues and pull requests are welcome.
 					</p>
-					<a class="more" href="https://github.com/Siryu6/OpenRig/issues">Report an issue →</a>
+					<a class="more" href="https://github.com/Siryu6/OpenRig/issues" data-umami-event="github" data-umami-event-location="status" data-umami-event-target="issues">Report an issue →</a>
 				</div>
 			</div>
 		</div>
@@ -396,8 +396,8 @@ const docs = (path = '') => `${base}/docs/${path}`;
 			<h2>Write a card, plug in, play</h2>
 			<p>The image boots straight into the rack. The first start takes a minute longer while it sets up its data partition.</p>
 			<div class="ctas">
-				<a class="btn btn-primary" href={docs('getting-started/raspberry-pi/')}>Install guide</a>
-				<a class="btn btn-ghost" href={docs('dev/build/')}>Build from source</a>
+				<a class="btn btn-primary" href={docs('getting-started/raspberry-pi/')} data-umami-event="docs-link" data-umami-event-location="closing" data-umami-event-target="getting-started/raspberry-pi">Install guide</a>
+				<a class="btn btn-ghost" href={docs('dev/build/')} data-umami-event="docs-link" data-umami-event-location="closing" data-umami-event-target="dev/build">Build from source</a>
 			</div>
 			<div class="terminal"><span class="p">$ </span>xz -dc openrig-os-0.2.0-rpi5.img.xz | sudo dd of=/dev/sdX bs=4M conv=fsync</div>
 		</div>

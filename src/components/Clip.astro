@@ -10,7 +10,18 @@ interface Props {
 const { name, label, caption } = Astro.props;
 ---
 
-<figure>
+<figure data-clip={name}>
 	<Video name={name} label={label} autoplay={false} />
 	{caption && <figcaption>{caption}</figcaption>}
 </figure>
+
+<script>
+	// Count the first play of each recording on a page
+	for (const figure of document.querySelectorAll<HTMLElement>('figure[data-clip]')) {
+		figure.querySelector('video')?.addEventListener(
+			'play',
+			() => window.umami?.track('video-play', { name: figure.dataset.clip, page: location.pathname }),
+			{ once: true },
+		);
+	}
+</script>

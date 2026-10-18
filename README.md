@@ -25,5 +25,30 @@ The site is published at [openrig.eu](https://openrig.eu) by GitHub Pages on eve
 `main`. `SITE` and `BASE` set where it is served (`BASE=/openrig-site` to serve it under the
 repository name instead of the custom domain).
 
+## Analytics
+
+Visits are counted with a self-hosted [Umami](https://umami.is) at `stats.siryu.me`, set up in
+`src/analytics.mjs` and loaded on every page (landing layout and Starlight `head`). It sets no
+cookies, only counts on `openrig.eu` (not local previews or github.io), and sends nothing when
+the browser has Do Not Track or Global Privacy Control on, or after the opt-out on `/privacy`.
+Query strings are stripped from URLs except `utm_*` tags. Web Vitals are sent too
+(`data-performance`).
+
+| Event | Properties | When |
+|---|---|---|
+| `get-started` | `location` | Hero "Get started" button |
+| `download` | `location`, `version` / `page` | Link to the GitHub releases |
+| `github` | `location`, `target` | Link to the OpenRig repository, its issues or changelog |
+| `docs-link` | `location`, `target` | Landing page link into the docs |
+| `outbound` | `host`, `url`, `page` | Any other link to another site |
+| `edit-page` | `page` | "Edit page" link in the docs |
+| `video-play` | `name`, `page` | First play of a docs recording |
+| `copy-code` | `page` | Copy button of a code block |
+| `search-open` | `page` | Docs search opened (the typed query is never sent) |
+| `search-result` | `target` | Search result chosen: the page it leads to |
+
+Links take a `data-umami-event` attribute where they are written in a component; links in the
+Markdown, the search and code blocks are tracked by the inline script in `src/analytics.mjs`.
+
 TONE3000 is a trademark of TONE3000; OpenRig is an independent project that uses the TONE3000
 API. The site content is licensed under the GPL-3.0-or-later, like OpenRig.

@@ -706,3 +706,7 @@ section {
 		scroll-behavior: auto;
 	}
 }
+
+.legal a {
+	text-decoration: underline;
+}
