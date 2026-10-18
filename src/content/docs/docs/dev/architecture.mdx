@@ -11,7 +11,7 @@ description: Threads, real-time rules, the OS image and updates.
 - **Chain builder thread**. It instantiates the plugins and models of a `ChainSpec`, off the audio
   thread, and hands the finished chain over, replaying the live commands received meanwhile.
 - **JACK callback**. Tuner, then effects, then looper, then the output router, with preallocated
-  buffers. The effects read the inputs used as returns and fill four send buses; the router
+  buffers. Return blocks read the inputs and Send blocks fill four send buses; the router
   plays the main mix, a send or an input on each output. A new chain is crossfaded in over
   20 ms, its sends with it; the old one is dropped off the audio thread.
 

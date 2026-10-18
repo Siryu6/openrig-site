@@ -1,6 +1,6 @@
 ---
 title: Inputs and outputs
-description: Use every input and output of the interface, with sends and returns on the blocks.
+description: Use every input and output of the interface, with Send and Return blocks in the rack.
 ---
 
 import Shot from '../../../../components/Shot.astro';
@@ -19,7 +19,7 @@ the **Routing** page says what each one does:
 
 Open it from **⋮** → **Settings** → **Inputs and outputs** → **Routing**. Changes are heard at once
 and kept; there is nothing to save. On a 480-pixel-high screen, scroll down to see the sends and
-returns.
+returns of the preset.
 
 ## Inputs
 
@@ -27,7 +27,7 @@ returns.
 
 **Effects input** chooses the input that goes through the effects and the tuner, input 1 by
 default. Each input has its own meter. The other inputs are not processed, but they can be played
-on an output or used as a [return](#sends-and-returns).
+on an output or brought into the chain by a [Return block](#send-and-return-blocks).
 
 ## Outputs
 
@@ -51,24 +51,24 @@ it is open.
 The outputs belong to the rig, not to a preset: changing presets never changes the levels sent
 to the front of house. They are kept in `routing.json` on the data partition.
 
-## Sends and returns
+## Send and return blocks
 
-<Shot src={blocks} alt="The Sends and returns card of the Guitar and bass preset: Pedal sends to Send 1, the Cabinet of branch B of the A/B split returns Input 2" caption="Sends and returns of a preset: a send after the pedal, and the bass on input 2 straight into the cabinet of branch B." />
+<Shot src={rack} alt="The rack of the Guitar and bass preset: Pedal, a Send 1 block, an A/B split with Amp and Cabinet on A and an Input 2 return block then a Cabinet on B, then Space" caption="Send 1 after the pedal; on branch B of the split, a return brings in input 2 before the bass cabinet." />
 
-The last card lists every block of the current preset, in signal order, with the split branch it
-is in. Each block can have:
+Two blocks of the rack, added from **+** like any other (family **Routing**, at the end of the
+list), take the signal out of the chain or bring an input in, wherever they are placed:
 
-- a **return before** it: an input of the interface replaces the signal at that point. The
-  blocks before it are no longer heard on that path; the block and the ones after it process the
-  input instead;
-- a **send after** it: the signal at that point is copied to a send, while it carries on through
-  the chain. An output whose source is that send plays it.
+| Block | Controls | What it does |
+|---|---|---|
+| **Send** | **Send** (1 to 4), **Level** | Copies the signal at its place to a send, while the signal carries on through the chain. An output whose source is that send plays it. |
+| **Return** | **Input**, **Level**, **Mix** | Brings an input of the interface into the chain. At 100 % mix, the default, the input replaces the signal: the blocks before it are no longer heard on that path. A lower mix blends the input in. |
 
-Sends and returns are saved with the preset, so each song can have its own. In the rack, a block
-with a send or a return only shows a small mark under it: **S1** for a send, **IN 2** for a
-return.
+The rack shows them as small jack plates named after their send or input: **Send 1**,
+**Input 2**. They are saved with the preset and can be bypassed or changed by
+[scenes](../../using/live/), like any block: a bypassed send stops sending, a bypassed return
+lets the signal through. Changes are ramped, so they never click.
 
-<Shot src={rack} alt="The rack of the Guitar and bass preset: Pedal marked S1, an A/B split with Amp and Cabinet on A and a Cabinet marked IN 2 on B, then Space" caption="The same preset in the rack: the marks under Pedal and the lower Cabinet." />
+<Shot src={blocks} alt="The Sends and returns card of the Routing page: Send 1 after Pedal, Return Input 2 at the start of branch B of the A/B split" caption="The Routing page lists the send and return blocks of the preset, to see what feeds each send." />
 
 A send placed in a branch of an A/B split is only heard while that branch is selected. During a
 preset change, the sends crossfade with the rest of the sound.
@@ -77,11 +77,11 @@ preset change, the sends crossfade with the rest of the sound.
 
 ### Dry signal for reamping
 
-1. On the last block before the amp, set **Send after** to **Send 1**.
+1. Add a **Send** block just before the amp, set to **Send 1**.
 2. Set an output to **Send 1**.
 
 That output now plays the guitar with its pedals but without the amp, ready to be recorded and
-reamped. Put the send before the first block for a fully dry signal, or set the output to the
+reamped. Put the send at the start of the chain for a fully dry signal, or set the output to the
 guitar's input instead.
 
 ### Guitar and bass on one pedalboard
@@ -89,7 +89,7 @@ guitar's input instead.
 1. Plug the bass into input 2.
 2. Add an [A/B split](../../using/rack/#splits): the amp and its cabinet on branch A, a bass
    cabinet on branch B.
-3. Set the **Return before** of the bass cabinet to **Input 2**.
+3. Add a **Return** block at the start of branch B, set to **Input 2**.
 
 Switching the split to B, from a scene, a footswitch or MIDI, plays the bass through its cabinet
 and the blocks after the split. The branch that is not selected is not processed and costs
@@ -98,15 +98,13 @@ nothing.
 ### A reverb on its own output
 
 Put the reverb alone in one branch of a [Parallel mix](../../using/rack/#splits) split, turn its
-own mix to 100 % wet, and set its **Send after** to **Send 2**. The main mix still plays the
-guitar with the reverb, and an output set to **Send 2** plays the reverb alone: for a
+own mix to 100 % wet, and add a **Send** block after it, set to **Send 2**. The main mix still
+plays the guitar with the reverb, and an output set to **Send 2** plays the reverb alone: for a
 wet / dry / wet rig, or a separate reverb channel at the desk.
 
 ## Limits
 
 - At most 16 inputs, 16 outputs and 4 sends.
-- Sends and returns belong to the preset, not to a scene: to change them per scene, put the
-  blocks in an A/B split.
 - The [looper](../../using/tuner-looper/#looper) only records and plays the main mix.
 - A preset made on a larger interface keeps its returns on inputs that are missing; those
   returns play silence until that interface is back.
