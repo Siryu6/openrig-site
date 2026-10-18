@@ -3,6 +3,10 @@ name: Deploy
 on:
   push:
     branches: [main]
+  # Picks up a new OpenRig release once its images are attached (see
+  # src/release.mjs)
+  schedule:
+    - cron: "17 */6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -29,6 +33,7 @@ jobs:
         env:
           SITE: https://openrig.eu
           BASE: /
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
