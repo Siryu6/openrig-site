@@ -1,5 +1,7 @@
 ---
 import { Image } from 'astro:assets';
+// Latest OpenRig release: bump with each release
+const VERSION = '0.3.0';
 import SiteLayout from '../components/SiteLayout.astro';
 import Video from '../components/Video.astro';
 
@@ -377,7 +379,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 	<section>
 		<div class="wrap">
 			<div class="status">
-				<span class="badge">v0.2</span>
+				<span class="badge">v{VERSION.split('.').slice(0, 2).join('.')}</span>
 				<div>
 					<h3>Where the project stands</h3>
 					<p>
@@ -399,7 +401,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 				<a class="btn btn-primary" href={docs('getting-started/raspberry-pi/')} data-umami-event="docs-link" data-umami-event-location="closing" data-umami-event-target="getting-started/raspberry-pi">Install guide</a>
 				<a class="btn btn-ghost" href={docs('dev/build/')} data-umami-event="docs-link" data-umami-event-location="closing" data-umami-event-target="dev/build">Build from source</a>
 			</div>
-			<div class="terminal"><span class="p">$ </span>xz -dc openrig-os-0.2.0-rpi5.img.xz | sudo dd of=/dev/sdX bs=4M conv=fsync</div>
+			<div class="terminal"><span class="p">$ </span>xz -dc openrig-os-{VERSION}-rpi5.img.xz | sudo dd of=/dev/sdX bs=4M conv=fsync</div>
 		</div>
 	</section>
 </SiteLayout>
