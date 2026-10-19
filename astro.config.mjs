@@ -61,6 +61,7 @@ export default defineConfig({
 						{ label: 'Updates', slug: 'docs/setup/updates' },
 						{ label: 'Footswitches and encoder', slug: 'docs/setup/footswitches' },
 						{ label: 'LV2 plugins', slug: 'docs/setup/lv2' },
+						{ label: 'Plugin store', slug: 'docs/setup/store' },
 						{ label: 'pedalboard.txt', slug: 'docs/setup/pedalboard-txt' },
 						{ label: 'Performance', slug: 'docs/setup/performance' },
 					],
