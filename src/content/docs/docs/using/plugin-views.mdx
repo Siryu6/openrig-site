@@ -1,0 +1,68 @@
+---
+title: Plugin views
+description: The curve or scope above a block's controls, and what each one shows.
+---
+
+Above the controls of most blocks, the editor draws what the block does: an EQ's curve, a
+compressor's level curve, a delay's echoes, or the sound going in and out. Drag the points on it
+to set the block; the knobs follow, and turning a knob moves the drawing.
+
+These views are **not made plugin by plugin**. OpenRig reads them from what every LV2 plugin
+already declares: its class (EQ, compressor, delay…) and the names and units of its controls
+("Frequency 1" in Hz, "Gain 1" in dB). An EQ, a compressor or a delay you add yourself gets its
+view the same way. A plugin OpenRig cannot read with confidence keeps its knobs alone.
+
+In every view, the sound going **in** is grey and the sound coming **out** is in the block's colour.
+The sound is measured only for the block shown, and only while its editor is open.
+
+## EQ
+
+- The curve is the EQ's response, from 20 Hz to 20 kHz and ±24 dB.
+- Each band has a point: **LC** and **HC** for low and high cuts, **LS** and **HS** for shelves,
+  **N** for a notch, **BP** for a band-pass, and numbers for the peaks.
+- **Drag** a point to set its frequency and gain. A cut has no gain: it moves across only.
+  On a graphic EQ the frequencies are fixed: the points move up and down only.
+- **Double-tap** a point to switch its band off or on. A band that is off is drawn hollow;
+  dragging it switches it on.
+- Behind the curve, the spectrum in and out. It is tilted by 4.5 dB per octave, so a guitar or
+  pink noise reads roughly flat and a boost or cut shows plainly.
+
+## Compressor, limiter and gate
+
+- **Left**: the level curve, output against input from −60 dB to 0 dB. The diagonal is "what comes in
+  goes out"; the curve bends at the threshold.
+  - Drag **T** across to set the threshold.
+  - Drag **R**, at the 0 dB end of a compressor's curve, up and down to set the ratio. Ratio
+    controls given as named steps ("1:4", "Lim"…) are followed through their names.
+  - A dot rides the curve with the sound going through.
+- **Middle**: the last six seconds in and out, and the gain reduction as a red line hanging from
+  the top.
+- **Right**: the gain reduction meter. It shows the plugin's own reading when the plugin gives
+  one in dB; otherwise OpenRig measures it from the levels in and out, allowing for the input and makeup
+  gains.
+- The caption reads the setting: ratio and knee, a limiter's ceiling, a gate's range.
+
+## Delay
+
+- **Right**: the echoes, drawn from the delay's time, feedback and mix: the dry sound in grey,
+  then each echo at its level, down to −60 dB. The tag in the corner gives the time across.
+  - Drag **T**, the first echo, across to set the time.
+  - Drag **F**, the second echo, up and down to set the feedback.
+- **Left**: the last seconds in and out, where the echoes heard show next to those drawn.
+- A delay synced to the tempo shows "tempo sync" and no echoes: its time comes from the tempo.
+  A delay whose time is at zero shows "no delay".
+
+## Reverb
+
+The last six seconds in and out, falling fast so each tail shows as it is, not as a meter falls.
+
+## Amps, pedals and drives
+
+- **Left**: the wave going in and the wave coming out, 20 ms of each, lined up on the same
+  crossing and scaled to the same height, so the shape of the clipping shows. The block's
+  latency is allowed for. The tag gives the output level against the input.
+- **Right**: the spectrum in and out, where the harmonics the block adds show.
+
+## Modulation and cabinets
+
+The spectrum in and out: a cabinet's tone, or the sweep of a chorus, flanger or phaser.

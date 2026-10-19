@@ -26,6 +26,34 @@ Scenes, knobs and bypasses are commands applied to the running chain: no rebuild
 reverbs ring on. Bypass uses a 10 ms ramp; delays and reverbs fade their input and let their
 output ring out.
 
+## Plugin views
+
+The views above a block's controls (see [Plugin views](../../using/plugin-views/)) are inferred,
+never configured per plugin.
+
+- **Inference** (`src/plugins/view_infer.rs`). The LV2 class picks the kind: an EQ for
+  `EQPlugin`, `ParaEQPlugin`, `FilterPlugin`…, a level curve for `CompressorPlugin`,
+  `LimiterPlugin`, `GatePlugin`, a scope for delays, reverbs, distortions, modulations and
+  simulators. Then the controls' names, units and named values say what each one is and which
+  ones form a band. Anything ambiguous gives no view: the knobs alone are better than a wrong
+  curve. `cargo test views_of_the_catalog -- --nocapture` prints the view each catalog plugin gets.
+- **Models** (`src/plugins/eq_curve.rs`, `dynamics.rs`, `scope.rs`). Plain functions of the
+  control values: the EQ response from RBJ biquads, a soft-knee compression curve, a delay's
+  echoes. They also go back, from a point dragged to the control value (`ratio_value`,
+  `time_value`, `Level::value`); `control_map.rs` holds the shared interpolation.
+- **Measuring.** The audio thread copies the input and output of one block, the one whose view is
+  shown, into a lock-free ring (`BlockTap` in `src/audio/spectrum.rs`), and only while a view is
+  shown. A 40 ms UI timer (`src/block_sound.rs`) reads it: spectrum (`Analyzer`, real FFT), peak
+  levels and their history (`src/level_history.rs`), the waves in and out (`waves`, aligned on
+  the latency and a rising zero crossing).
+- **Drawing.** Rust draws, Slint shows. Each view (`eq_ui.rs`, `dynamics_ui.rs`, `scope_ui.rs`)
+  turns its model into path commands and handle positions; `src/plugin_view.rs` holds what they
+  share: the editor's control values (`Controls`), the per-plugin cache of inferred views, path
+  helpers and the log frequency axis. In Slint, `ui/components/plot.slint` holds the shared
+  pieces (`Plot`, `PlotPath`, `InOut`, `Handle`, `Caption`…). Handles only report where they are
+  dragged, as fractions of their plot (`PlotEvents`); Rust turns that into control values and sets
+  them exactly as a knob would.
+
 ## The OS image
 
 A [Buildroot](https://buildroot.org) image with BusyBox init, no systemd and no desktop:
@@ -59,12 +87,15 @@ service to install it; RAUC checks the signature.
 ```
 src/
 ├── audio/        JACK callback, chain switcher, tuner, looper, output routing
-├── plugins/      lilv host, LV2 features, NAM, impulse responses, small DSP blocks
+├── plugins/      lilv host, LV2 features, NAM, impulse responses, small DSP blocks,
+│                 view inference and models (view_infer, eq_curve, dynamics, scope)
 ├── state/        AppState: chain, presets, scenes, setlists, session
 ├── presets/      Preset and setlist storage
 ├── tone3000/     TONE3000 account, library, pictures
 ├── midi.rs       MIDI parsing, the Helix-style map, clock
 ├── update.rs     Release check, download, request to the OS updater
+├── plugin_view.rs, block_sound.rs, eq_ui.rs, dynamics_ui.rs, scope_ui.rs
+│                 Plugin views: shared drawing, the sound of the block shown, each view
 └── …_ui.rs       Glue between each Settings card or page and the UI
 ui/               Slint UI: pages, components, theme
 native/           C wrapper around NeuralAudio
