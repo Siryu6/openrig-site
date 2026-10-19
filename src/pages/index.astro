@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import SiteLayout from '../components/SiteLayout.astro';
 import Video from '../components/Video.astro';
+import { latestVersion } from '../release.mjs';
 
 import strip from '../assets/shots/strip.png';
 import editorAmp from '../assets/shots/editor-amp.png';
@@ -11,6 +12,8 @@ import monitor from '../assets/shots/monitor.png';
 import addEffect from '../assets/shots/add-effect.png';
 import setlists from '../assets/shots/setlists.png';
 
+const version = await latestVersion();
+const minor = version.split('.').slice(0, 2).join('.');
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const docs = (path = '') => `${base}/docs/${path}`;
 ---
@@ -22,7 +25,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 	<section class="hero">
 		<div class="wrap">
 			<div class="hero-text">
-				<span class="eyebrow"><span class="dot"></span> Version 0.2 · Raspberry Pi 5 and x86_64</span>
+				<span class="eyebrow"><span class="dot"></span> Version {minor} · Raspberry Pi 5 and x86_64</span>
 				<h1>The open source pedalboard <em>you build yourself</em></h1>
 				<p class="lede">
 					OpenRig turns a Raspberry Pi 5, a USB audio interface and a touchscreen into a guitar
@@ -31,7 +34,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 				</p>
 				<div class="ctas">
 					<a class="btn btn-primary" href={docs()} data-umami-event="get-started" data-umami-event-location="hero">Get started</a>
-					<a class="btn btn-ghost" href="https://github.com/Siryu6/OpenRig/releases" data-umami-event="download" data-umami-event-location="hero" data-umami-event-version="0.2">Download 0.2</a>
+					<a class="btn btn-ghost" href="https://github.com/Siryu6/OpenRig/releases" data-umami-event="download" data-umami-event-location="hero" data-umami-event-version={minor}>Download {minor}</a>
 				</div>
 				<p class="hero-meta">Free software under the GPL-3.0 · No account needed</p>
 			</div>
@@ -377,7 +380,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 	<section>
 		<div class="wrap">
 			<div class="status">
-				<span class="badge">v0.2</span>
+				<span class="badge">v{minor}</span>
 				<div>
 					<h3>Where the project stands</h3>
 					<p>
@@ -399,7 +402,7 @@ const docs = (path = '') => `${base}/docs/${path}`;
 				<a class="btn btn-primary" href={docs('getting-started/raspberry-pi/')} data-umami-event="docs-link" data-umami-event-location="closing" data-umami-event-target="getting-started/raspberry-pi">Install guide</a>
 				<a class="btn btn-ghost" href={docs('dev/build/')} data-umami-event="docs-link" data-umami-event-location="closing" data-umami-event-target="dev/build">Build from source</a>
 			</div>
-			<div class="terminal"><span class="p">$ </span>xz -dc openrig-os-0.2.0-rpi5.img.xz | sudo dd of=/dev/sdX bs=4M conv=fsync</div>
+			<div class="terminal"><span class="p">$ </span>xz -dc openrig-os-{version}-rpi5.img.xz | sudo dd of=/dev/sdX bs=4M conv=fsync</div>
 		</div>
 	</section>
 </SiteLayout>

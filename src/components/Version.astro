@@ -1,0 +1,11 @@
+---
+// Latest released version ("0.3"), or the full one with `full`
+import { latestVersion } from '../release.mjs';
+
+interface Props {
+	full?: boolean;
+}
+const version = await latestVersion();
+---
+
+{Astro.props.full ? version : version.split('.').slice(0, 2).join('.')}

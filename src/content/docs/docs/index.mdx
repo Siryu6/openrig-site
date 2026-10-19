@@ -6,6 +6,7 @@ description: What OpenRig is, what it runs on, and where to start.
 import Shot from '../../../components/Shot.astro';
 import rack from '../../../assets/shots/rack.png';
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+import Version from '../../../components/Version.astro';
 
 OpenRig is a guitar multi-effects pedalboard that you assemble from standard parts: a
 Raspberry Pi 5 (or an x86_64 mini PC), a USB audio interface and a touchscreen. It ships as a
@@ -36,7 +37,7 @@ computer needed once the card is written.
 </CardGrid>
 
 :::note[A young project]
-OpenRig is at version 0.2. The Raspberry Pi 5 image runs on a Pi 5 (8 GB) with a Focusrite
+OpenRig is at version <Version />. The Raspberry Pi 5 image runs on a Pi 5 (8 GB) with a Focusrite
 Scarlett 2i2 at 128 × 2; the x86_64 image is tested in QEMU so far. If something does not work,
 [open an issue](https://github.com/Siryu6/OpenRig/issues).
 :::
