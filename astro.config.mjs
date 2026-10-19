@@ -45,6 +45,7 @@ export default defineConfig({
 						{ label: 'Tour of the screen', slug: 'docs/using/tour' },
 						{ label: 'The rack', slug: 'docs/using/rack' },
 						{ label: 'Block editor', slug: 'docs/using/editor' },
+						{ label: 'Plugin views', slug: 'docs/using/plugin-views' },
 						{ label: 'Amps, pedals and cabinets', slug: 'docs/using/neural-blocks' },
 						{ label: 'TONE3000', slug: 'docs/using/tone3000' },
 						{ label: 'Presets, scenes and setlists', slug: 'docs/using/presets' },
