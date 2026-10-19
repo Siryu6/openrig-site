@@ -8,12 +8,12 @@ next to its built-in blocks: their controls, ranges, units and switches come fro
 are edited like any other block.
 
 The OS image ships **no LV2 plugin**: the Amp, Amp + Cab, Pedal, Cabinet and Space blocks work
-out of the box.
+out of the box. The [plugin store](../store/) installs ready-made plugins in one tap.
 
-## Adding plugins
+## Adding plugins by hand
 
 Copy LV2 bundles (folders ending in `.lv2`) into `/data/pedalboard/lv2` over [SSH](../../help/ssh/),
-make them belong to the app, and restart:
+make them belong to the app, then tap the refresh button of the store (or restart):
 
 ```bash
 scp -O -r my-plugin.lv2 root@192.168.1.42:/data/pedalboard/lv2/

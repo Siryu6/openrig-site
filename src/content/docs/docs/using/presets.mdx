@@ -31,6 +31,11 @@ The **Presets** page lists your presets. Tap one to load it; the one playing is 
 You do not lose anything by not saving: the current chain is kept across restarts. Saving is
 how you go back to a sound later.
 
+A preset keeps the settings of an [LV2 plugin](../../setup/lv2/) by the name of each control,
+so an update of the plugin that adds or reorders controls keeps your sound. A preset that uses
+a plugin this pedalboard does not have (made on another one, or after a removal) still loads
+the rest of its chain, and saving again keeps that plugin's settings for when it is back.
+
 ## Scenes
 
 A preset has 8 scenes. A scene remembers, for every block, whether it is on and its settings,
