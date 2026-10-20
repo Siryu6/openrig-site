@@ -35,6 +35,21 @@ Set `display_rotation` to 90, 180 or 270 in [pedalboard.txt](../../setup/pedalbo
 
 Without an interface, the audio server waits for one: plugging it in later works.
 
+## One output stays silent
+
+With a multi-channel interface or sound HAT, an output can stay silent while its meter on the
+[Routing](../../setup/routing/) page moves. The meter reads what OpenRig sends, so the sound is
+lost after it. Over [SSH](../ssh/):
+
+1. `grep -E "Interface|Connected|connect" /var/log/messages` shows the ports the interface offers
+   and the connections OpenRig made at start: `pedalboard:out_3 → system:playback_3` means
+   output 3 is wired. `jack_lsp -c` shows the live connections.
+2. Many multi-channel cards and HATs have a volume or mute control per channel that starts at
+   zero. `amixer -c <card> contents` lists them (the card number comes from
+   `cat /proc/asound/cards`).
+3. To test the card without OpenRig: `killall jackd; speaker-test -D hw:<card> -c 8 -t wav`
+   plays a voice on each channel. The audio server starts again once the test ends (Ctrl+C).
+
 ## USB devices dropping out
 
 A touchscreen or an audio interface that disconnects is usually short of power. The Pi 5 gives
