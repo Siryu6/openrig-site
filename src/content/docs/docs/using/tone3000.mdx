@@ -18,30 +18,31 @@ pedalboard, without a computer.
 
 ## Linking your account
 
-This is done once. TONE3000 asks each app that uses its API to have an *application* key: you
-create your own, free, on tone3000.com.
+This is done once, with your TONE3000 account. No key or application to create: OpenRig signs
+in through its own TONE3000 application.
 
 <Steps>
 
-1. On [tone3000.com](https://www.tone3000.com), open your developer settings and create an
-   application. Copy its **publishable key**, the one that starts with `t3k_pub_`.
+1. On the pedalboard, open **⋮** → **Settings** → **TONE3000 Connect** and tap **Connect**.
+   The pedalboard shows a QR code and a short code.
 
-   :::danger
-   Never enter the **secret** key (`t3k_cs_…`) on the pedalboard, or anywhere outside
-   TONE3000. OpenRig refuses it.
-   :::
-
-2. On the pedalboard, open **⋮** → **Settings** → **TONE3000 Connect**, tap **Edit** and type
-   the publishable key. A USB keyboard works too.
-
-3. Tap **Connect**. The pedalboard shows a QR code and a short code.
-
-4. Scan the QR code with your phone, or open `tone3000.com/activate` and enter the code, then
-   approve. The card then says **Signed in as** your TONE3000 username.
+2. Scan the QR code with your phone, or open `tone3000.com/activate` and enter the code, then
+   approve OpenRig. The card then says **Signed in as** your TONE3000 username.
 
 </Steps>
 
 The link survives restarts and going offline. **Disconnect** removes it from the pedalboard.
+
+:::note[Updating from 0.6 or before]
+If you linked your account with a key of your own, the pedalboard signs you out once after the
+update: tap **Connect** again. The captures you downloaded stay on the pedalboard.
+:::
+
+:::tip[Developers]
+**Edit** on the **Application** line takes the publishable key (`t3k_pub_…`) of your own
+TONE3000 application; an empty key goes back to OpenRig's. Never enter a **secret** key
+(`t3k_cs_…`) on the pedalboard: OpenRig refuses it.
+:::
 
 ## The library
 
@@ -57,6 +58,10 @@ Open it from a block's editor with **Browse**, or from **⋮** → **TONE3000**.
 | **Trending** | What TONE3000 users play the most right now |
 | **Latest** | The newest tones |
 
+**Search TONE3000**, at the top, opens the keyboard: type an amp, a pedal or a creator, then
+**Search**. The search is sent only then, never while typing, and keeps the gear filter. **✕**
+goes back to the tabs.
+
 Opened from a block, the library only lists the gear that block can play: amps for an Amp block,
 pedals and outboard gear for a Pedal block, cabinets for a Cabinet… Opened from the menu, every
 gear can be chosen.
@@ -65,9 +70,18 @@ gear can be chosen.
 
 Tap a tone to see its captures, its creator, its license and its page on tone3000.com.
 
-<Shot src={detail} alt="The Marshall JCM800 2203x tone by @pamukparty with six captures and their Download buttons" caption="A tone and its captures. Each one is downloaded only when you ask for it." />
+<Shot src={detail} alt="The Marshall JCM800 2203x tone by @pamukparty with six captures and their Download buttons" caption="A tone and its captures. Each one is downloaded only when you tick it." />
 
-Tap **Download** on a capture. Once it is on the pedalboard, the button becomes:
+Tick the captures you want, then tap **Download (n)**. They are downloaded one after the other:
+each one shows **Waiting…** then **Downloading…**, the bar at the bottom shows its progress, and
+**Stop** drops the ones still waiting. A tone with a single capture comes ticked already.
+
+Large tones are shown 25 captures per page, with **‹ ›** to turn the pages. **Select all**
+(**Select page** on a large tone) ticks every capture of the page shown, and **Clear** unticks
+them. You can tick 25 captures at most at a time: TONE3000 asks apps not to download a whole
+pack of hundreds of captures at once.
+
+Once a capture is on the pedalboard, it shows:
 
 - **Use**, opened from a block: loads it into that block;
 - **Add**, opened from the menu: puts it in a new block of the right type at the end of the chain.
@@ -82,8 +96,9 @@ block carries the TONE3000 mark in the rack.
 
 - Captures in the NAM and IR formats can be played. AIDA-X, Proteus and AA snapshot tones are
   listed but greyed out.
-- Favoriting and searching are done on tone3000.com for now: what you favorite there shows in
-  **Favorites**.
+- Favoriting is done on tone3000.com for now: what you favorite there shows in **Favorites**.
+- Every request to TONE3000 waits its turn, to stay under its rate limit: when you go fast,
+  the pedalboard can show **Waiting for TONE3000…** for a moment.
 - Your sign-in is kept only on the pedalboard, and only ever sent to tone3000.com.
 - Respect each capture's license: it is shown on the tone, and kept with the files.
 
