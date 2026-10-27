@@ -9,6 +9,8 @@ import { Steps } from '@astrojs/starlight/components';
 import trending from '../../../../assets/shots/t3k-trending.png';
 import detail from '../../../../assets/shots/t3k-detail.png';
 import downloaded from '../../../../assets/shots/t3k-downloaded.png';
+import downloading from '../../../../assets/shots/t3k-downloading.png';
+import pages from '../../../../assets/shots/t3k-pages.png';
 
 [TONE3000](https://www.tone3000.com) hosts amp, pedal, cabinet and room captures
 shared by their creators. OpenRig uses the TONE3000 API to list them and download them on the
@@ -48,7 +50,7 @@ TONE3000 application; an empty key goes back to OpenRig's. Never enter a **secre
 
 Open it from a block's editor with **Browse**, or from **⋮** → **TONE3000**.
 
-<Shot src={trending} alt="The TONE3000 library on the Trending tab, filtered on Amp: EVH 5150iii, Marshall JCM800 2203x, Marshall JCM 800 2203…" caption="The Trending tab, opened from an Amp block: only amps are listed, each with its creator." />
+<Shot src={trending} alt="The TONE3000 library on the Trending tab, filtered on Amp, under the Search TONE3000 field: EVH 5150iii Ivory, Mesa/Boogie Dual Rectifier, Orange Dual Dark 100…" caption="The Trending tab, opened from an Amp block: only amps are listed, each with its creator. The search field is at the top." />
 
 | Tab | What it lists |
 |---|---|
@@ -70,23 +72,27 @@ gear can be chosen.
 
 Tap a tone to see its captures, its creator, its license and its page on tone3000.com.
 
-<Shot src={detail} alt="The Marshall JCM800 2203x tone by @pamukparty with six captures and their Download buttons" caption="A tone and its captures. Each one is downloaded only when you tick it." />
+<Shot src={detail} alt="The Marshall JCM800 2203x tone by @pamukparty: Classic Crunch already downloaded with its Use button, Edge of Breakup and Heavy ticked, Download (2)" caption="A tone and its captures: two are ticked. Each one is downloaded only when you tick it." />
 
 Tick the captures you want, then tap **Download (n)**. They are downloaded one after the other:
 each one shows **Waiting…** then **Downloading…**, the bar at the bottom shows its progress, and
 **Stop** drops the ones still waiting. A tone with a single capture comes ticked already.
+
+<Shot src={downloading} alt="Edge of Breakup downloaded, Heavy downloading, and the bar saying Downloading 2 of 2 with a Stop button" caption="Downloading: one capture after the other, Stop drops the ones still waiting." />
 
 Large tones are shown 25 captures per page, with **‹ ›** to turn the pages. **Select all**
 (**Select page** on a large tone) ticks every capture of the page shown, and **Clear** unticks
 them. You can tick 25 captures at most at a time: TONE3000 asks apps not to download a whole
 pack of hundreds of captures at once.
 
+<Shot src={pages} alt="The EVH 5150iii Ivory FULL Pack with 28 captures: page 1 of 2, its captures ticked by Select page, Download (13)" caption="A pack of 28 captures, page 1 of 2: Select page ticked the ones not on the pedalboard yet. EVH 5150iii Ivory FULL Pack by @ampspedalspickups." />
+
 Once a capture is on the pedalboard, it shows:
 
 - **Use**, opened from a block: loads it into that block;
 - **Add**, opened from the menu: puts it in a new block of the right type at the end of the chain.
 
-<Shot src={downloaded} alt="The JCM800 Classic Crunch capture downloaded, with its Use button" caption="Downloaded: Use loads it into the Amp block it was opened from." />
+<Shot src={downloaded} alt="The JCM800 Classic Crunch, Edge of Breakup and Heavy captures downloaded, each with its Use button" caption="Downloaded: Use loads it into the Amp block it was opened from." />
 
 Downloads go to `models/Tone3000/<gear>/<tone>/` with a `tone.json` that keeps the title,
 creator, license and link. The block's editor then shows the tone's picture and creator, and the
