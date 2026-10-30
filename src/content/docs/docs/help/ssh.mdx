@@ -11,7 +11,7 @@ The pedalboard runs an SSH server. There is no password login: only keys.
    `authorized_keys` on the card's first partition, from any computer. Several keys can go in the
    file, one per line.
 2. Start the pedalboard. The keys are copied at each boot; deleting the file revokes them.
-3. Log in as root, at the address your router gave the pedalboard:
+3. Log in as root, at the address shown in **Settings** → **Wi-Fi** (Ethernet included):
 
 ```bash
 ssh root@192.168.1.42
