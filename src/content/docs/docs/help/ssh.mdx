@@ -27,6 +27,15 @@ pedalboard-update status      # system slots and the last update
 
 Logs are kept in memory: they start again at each boot.
 
+`pedalboard-report` prints everything useful for a bug report in one go: versions and system
+slots, the settings in effect, the sound cards and how the audio server opened them, their mixer
+controls, the audio messages of the kernel, and the logs of the audio server and the app. It
+changes nothing.
+
+```bash
+pedalboard-report > report.txt
+```
+
 ## Files
 
 Your data lives in `/data/pedalboard`:

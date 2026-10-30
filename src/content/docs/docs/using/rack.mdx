@@ -31,9 +31,19 @@ you want it.
 
 ## Quick knobs
 
-Tap a block to select it. Its controls show as knobs along the bottom of the screen, five at a
-time; the arrows on the right show the next ones. The buttons on the left turn it on or off,
-open the full [editor](../editor/), or delete it.
+Tap a block to select it. Its controls show along the bottom of the screen, five at a time; the
+arrows on the right show the next ones. The buttons on the left turn it on or off, or open the
+full [editor](../editor/).
+
+- **Knobs** turn with a vertical drag. **Double tap** a knob to put it back to its default
+  value. **Hold** it without moving to go back to the value before your last change, to compare
+  the two; hold again to swap back.
+- **Switches** toggle with a tap.
+- **Lists** open just above the strip, next to the field: tap an option to pick it. The current
+  one is marked. Tap anywhere else to close the list.
+
+Which controls the strip shows, and in which order, is set with
+[Arrange](../editor/#arrange) in the editor.
 
 <Shot src={strip} alt="The Peavey 5150 block selected with Input, Output, Normalize, Gate and Threshold along the bottom" caption="A selected amp: Input, Output, Normalize, Gate and Threshold; page 2 has the tone stack." />
 
@@ -42,6 +52,16 @@ open the full [editor](../editor/), or delete it.
 - **Hold** a block and release it in place to bypass it. Delays and reverbs keep ringing (see
   [tails](../live/#tails)).
 - **Hold and drag** it to move it anywhere in the chain, including into a split branch.
+
+## Removing a block
+
+- **Hold and drag** the block: a **Remove** target shows at the bottom of the rack. Drop the
+  block on it when it turns red and says **Release to remove**.
+- Or open its [editor](../editor/#header) and use the bin at the end of the header.
+
+The rack then shows **Block removed** with **Undo** for 8 seconds. Undo puts the block back
+where it was, with its settings and colour, as long as nothing else changed in between. It works
+for splits too.
 
 ## Splits
 
@@ -56,7 +76,8 @@ The split button, next to **+**, adds an empty split at the end of the chain:
 | **Left / right** | The top branch goes to the left output, the bottom one to the right |
 
 Tap a split to select it: the panel at the bottom changes its type, switches A/B, sets the mix
-and the pans, and adds a block to its top or bottom branch. Blocks can also be dragged into a
+and the pans, and adds a block to its top or bottom branch. Its bin, at the far end of the
+panel, removes the split. Blocks can also be dragged into a
 branch, and splits can be nested.
 
 A typical use of **Left / right**: a cabinet impulse response on one side for the front of house,
