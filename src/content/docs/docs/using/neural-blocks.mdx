@@ -33,6 +33,7 @@ the NAM LV2 plugin, natively: the model is part of the chain and saved in preset
 | Threshold | −100 to 0 dB (−80) | Level under which the gate closes |
 | Bass, Middle, Treble | 0 to 10 (5 is flat) | Tone stack, on Amp and Amp + Cab only |
 | Quality | Full / Light | Size of the model, only for captures that hold two sizes |
+| EQ position | Pre / Post (Post) | Tone stack before or after the model, on Amp and Amp + Cab only |
 
 The gate and the tone stack work like those of the NAM plugin, so the same settings sound the
 same:
@@ -43,6 +44,13 @@ same:
 - The **tone stack** is three filters after the model: low shelf at 150 Hz, peak at 425 Hz and
   high shelf at 1.8 kHz. Centred, it costs nothing. Pedals have none: their capture already
   includes their tone knob.
+
+### EQ position
+
+**Post**, the default, puts the tone stack after the model, as in the NAM plugin. **Pre** moves
+it in front of the model, like an EQ pedal before the amp: cut the bass to tighten a high-gain
+capture, boost the mids to push it harder. The gate still listens to your playing before the EQ.
+Presets saved before this control load with Post.
 
 ### Quality
 
