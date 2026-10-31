@@ -7,6 +7,7 @@ import Shot from '../../../../components/Shot.astro';
 import editorAmp from '../../../../assets/shots/editor-amp.png';
 import presets from '../../../../assets/shots/editor-tone-presets.png';
 import color from '../../../../assets/shots/editor-color.png';
+import pages from '../../../../assets/shots/editor-pages.png';
 
 Double tap a block, or tap the pencil under its quick knobs, to open its editor.
 
@@ -66,6 +67,11 @@ Above the controls of most LV2 plugins, a [plugin view](../plugin-views/) draws 
 does: an EQ's curve, a compressor's level curve, a delay's echoes, or the sound in and out.
 On a small screen (800 × 480), the view folds into a **Show / Hide** bar when it leaves too little
 room; hide it to see two rows of controls.
+
+When the controls do not all fit, they go by pages: the arrows on the right show the next or
+previous row, with the page number in between. A swipe scrolls them too.
+
+<Shot src={pages} alt="The editor of a 4-band equalizer: its curve, then the controls of band B and C, with the page arrows on the right showing 2/4" caption="17 controls on a 1024 × 600 screen: page 2 of 4." />
 
 ## Arrange
 
