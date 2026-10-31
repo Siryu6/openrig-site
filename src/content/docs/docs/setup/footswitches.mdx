@@ -1,6 +1,6 @@
 ---
 title: Footswitches and encoder
-description: Wire footswitches and a rotary encoder to the Raspberry Pi's GPIO.
+description: Wire footswitches, a rotary encoder and knob encoders to the Raspberry Pi.
 ---
 
 On a Raspberry Pi, up to 8 footswitches and a rotary encoder can be wired straight to the GPIO
@@ -84,3 +84,28 @@ Turn to pick a page, press to open it. Tapping a page works too.
 
 Hold also goes back one level elsewhere: it closes the power dialog, leaves the store and the
 setlists.
+
+## Knob encoders (I2C)
+
+Encoder boards on the I2C bus give the rack's [knob strip](../../using/rack/#quick-knobs) real
+knobs, one encoder per field:
+
+- Adafruit I2C rotary encoders (seesaw, addresses 0x36 to 0x3D);
+- the Adafruit Quad rotary encoder (0x49 to 0x50);
+- the M5Stack 8Encoder (0x41).
+
+Wire SDA to GPIO 2 (pin 3), SCL to GPIO 3 (pin 5), and power and ground. Several boards of the
+same kind chain on the bus, and their encoders count in address order. The image turns the I2C
+bus on.
+
+| Encoder | Turn | Press | Hold |
+|---|---|---|---|
+| 1 to 5, knob | Change the value | Swap with the value before the turns (A/B) | Back to the default |
+| 1 to 5, switch | Flip it | Flip it | Back to the default |
+| 1 to 5, list | Step through it; open, move through it | Open it; open, pick | Back to the default; open, close it |
+| 1 to 5, presets or model | Open the list, then move through it | Open the list, then pick | Close the list |
+| 6 | The strip's pages | | |
+
+**Settings** → **Hardware** sets the board, the counts per detent and the direction, and says
+which addresses answered. Without boards, the keys `a s d f g h` turn encoders 1 to 6 (with
+Shift, the other way) and `z x c v b n` press them (with Shift, hold), on the rack page.

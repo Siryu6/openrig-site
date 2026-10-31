@@ -6,6 +6,7 @@ description: Build the signal chain, with splits, stereo and quick knobs.
 import Shot from '../../../../components/Shot.astro';
 import rack from '../../../../assets/shots/rack.png';
 import strip from '../../../../assets/shots/strip.png';
+import stripModel from '../../../../assets/shots/strip-model.png';
 import addEffect from '../../../../assets/shots/add-effect.png';
 import splitMenu from '../../../../assets/shots/split-menu.png';
 
@@ -46,6 +47,18 @@ Which controls the strip shows, and in which order, is set with
 [Arrange](../editor/#arrange) in the editor.
 
 <Shot src={strip} alt="The Peavey 5150 block selected with Input, Output, Normalize, Gate and Threshold along the bottom" caption="A selected amp: Input, Output, Normalize, Gate and Threshold; page 2 has the tone stack." />
+
+Every control has its field: knobs, switches, and lists, which open just above the strip so
+they stay near the finger. After the controls come two more fields:
+
+- **Presets**: the plugin's factory settings, when it has any. Pick one to load it.
+- **The model** of a neural, impulse response or file block (Amp, Cabinet, Sample…): the other
+  presets of the same tone to switch to, and **Choose another…** to open the full
+  [model chooser](../editor/#model). With no preset to list, a tap opens the chooser.
+
+[Arrange](../editor/#arrange) sets which controls the strip shows and in what order.
+
+<Shot src={stripModel} alt="The Mesa Boogie block selected, its Amp + Cab field open on the presets of the tone, the current one lit" caption="Page 2 of an Amp + Cab block: the tone stack, the EQ position and the model, open on the presets of the tone." />
 
 ## Bypass and move
 
